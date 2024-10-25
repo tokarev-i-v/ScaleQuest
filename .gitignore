@@ -158,16 +158,5 @@ cython_debug/
 #  and can be added to the global gitignore or merged into this file.  For a more nuclear
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
-automatic_gen/data/
-query_sft/models/
-query_sft/data/
-query_dpo/models
-dart-math/
-evaluation/code/
-evaluation/outputs/
-evol_instruct/output
-temp.py
-automatic_gen/*data
-baselines
-check_solvability_difficulty
-test_rm
+src/data_generation/generation
+src/train_question_generator/models

@@ -128,6 +128,11 @@ def formatting_prompts_func(example):
         text = f"<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\n{example['query'].strip()}<|im_end|>"
     elif script_args.prompt_type == "deepseek-math":
         text = f"User: {example['query'].strip()}\n\n<｜end▁of▁sentence｜>"
+    elif script_args.prompt_type == "deepseek-code":
+        text = f"You are an AI programming assistant, utilizing the Deepseek Coder model, developed by Deepseek Company, and you only answer questions related to computer science. For politically sensitive questions, security and privacy issues, and other non-computer science questions, you will refuse to answer\n" \
+                f"### Instruction:\n{example['query'].strip()}\n### Response:\n"
+    elif script_args.prompt_type == "qwen2.5-code":
+        text = f"<|im_start|>system\nYou are Qwen, created by Alibaba Cloud. You are a helpful assistant.<|im_end|>\n<|im_start|>user\n{example['query'].strip()}<|im_end|>"
     else:
         raise NotImplementedError(
             f"Prompt type {script_args.prompt_type} not implemented."
@@ -140,7 +145,7 @@ dataset = dataset.map(formatting_prompts_func, batched=False)
 train_dataset = dataset["train"]
 eval_dataset = dataset["test"] if "test" in dataset else None
 if script_args.max_training_samples > 0:
-    train_dataset = train_dataset.select(range(script_args.max_training_samples))
+    train_dataset = train_dataset.shuffle(seed=42).select(range(script_args.max_training_samples))
 
 
 # formatting_prompts_func

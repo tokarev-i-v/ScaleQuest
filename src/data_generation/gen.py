@@ -81,6 +81,9 @@ if args.qry_gen:
     elif "deepseek" in args.qry_prompt_type:
         pre_query_template = "<｜begin▁of▁sentence｜>User: "
         stop_tokens = ["<｜begin▁of▁sentence｜>", "<｜end▁of▁sentence｜>"]
+    elif "qwen2.5-code" in args.qry_prompt_type:
+        pre_query_template = "<|im_start|>system\nYou are Qwen, created by Alibaba Cloud. You are a helpful assistant.<|im_end|>\n<|im_start|>user\n"
+        stop_tokens = ["<|im_start|>", "<|im_end|>", "<|endoftext|>"]
     else:
         raise NotImplementedError(
             f"Query prompt type {args.qry_prompt_type} is not implemented"
@@ -155,6 +158,13 @@ if args.res_gen:
             "and put your final answer within \\boxed{{}}.\n\nAssistant:"
         )
         stop_tokens = ["<｜begin▁of▁sentence｜>", "<｜end▁of▁sentence｜>"]
+    elif "qwen2.5-code" in args.res_prompt_type:
+        res_generation_template = (
+            "<|im_start|>system\nYou are Qwen, created by Alibaba Cloud. You are a helpful assistant.<|im_end|>\n"
+            "<|im_start|>user\n{input}<|im_end|>\n"
+            "<|im_start|>assistant\n"
+        )
+        stop_tokens = ["<|im_start|>", "<|im_end|>", "<|endoftext|>"]
     else:
         raise NotImplementedError(
             f"Response prompt type {args.res_prompt_type} is not implemented"
@@ -203,7 +213,9 @@ if args.res_gen:
         has_answer = "boxed" in response or "he answer is" in response or "final answer is" in response
         return has_answer
 
-    dataset = dataset.map(strip_data, concurrency=4).filter(filter_data, concurrency=4)
+    dataset = dataset.map(strip_data, concurrency=4)
+    if "math" in args.res_prompt_type:
+        dataset = dataset.filter(filter_data, concurrency=4)
 
     res_gen_output_path = os.path.join(
         args.output_folder,
