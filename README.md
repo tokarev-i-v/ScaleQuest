@@ -13,16 +13,15 @@ We introduce ScaleQuest, a scalable, cost-effective, and novel data synthesis me
 
 ![](img/results.png)
 
-This repository contains our complete data synthesis method, including:
-
-```
-
-
-We randomly sampled 100 generated data points and placed them in `data_samples/samples.jsonl`
-
 ## Method Overview
 
 ![](img/method.png)
+
+We randomly sampled 100 generated data points and placed them in `data_samples/samples.jsonl`
+
+
+
+This repository contains our complete data synthesis method, including:
 
 1. Training a question generator
 - through question fine-tuning (code in the `qft_train` folder).
@@ -31,4 +30,5 @@ We randomly sampled 100 generated data points and placed them in `data_samples/s
 - Applying a filtering process to the generated questions (code in the `question_filtering` folder).
 - Generating responses (code in the `data_generation` folder) and applying a reward filtering strategy (code in the `reward_filtering` folder).
 3. For instruction-tuning and evaluation, we directly use the DART-Math framework.
+
 
