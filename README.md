@@ -135,8 +135,8 @@ cd src/data_generation && bash scripts/run.sh
 
 ## Step 3: Response Synthesis
 
-1. Generating responses (code in the `src/data_generation` folder) and applying a reward filtering strategy (code in the `src/data_generation/reward_filtering` folder).
-2. For instruction-tuning and evaluation, we directly use the DART-Math framework.
+1. Generating responses (code in the `src/data_generation` folder)
+2. applying a reward filtering strategy (code in the `src/data_generation/reward_filtering` folder).
 
 ```bash
 cd src/data_generation && bash scripts/run.sh
