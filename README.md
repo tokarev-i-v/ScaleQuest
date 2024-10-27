@@ -142,6 +142,10 @@ cd src/data_generation && bash scripts/run.sh
 cd src/data_generation && bash scripts/run.sh
 ```
 
+## Step 4: Instruction-Tuning & Evaluation
+
+We use [DART-Math](https://github.com/hkust-nlp/dart-math) framework for instruction tuning and evaluation.
+
 ## Citation
 
 ```
